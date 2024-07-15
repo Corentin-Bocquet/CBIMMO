@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="Immo2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <title>C&B IMMO</title>
+</head>
+<body>
+
+  <img src="Building.png" class="image">
+
+<form id="myForm">
+  
+    <div class="segment">
+      <h1 class="merriweather-regular">C&B IMMO</h1><br>
+      <p class="merriweather-regular-2">Calculons ensemble la rentabilité de <br>votre bien</p>
+      <br>
+      <!--<h3>Calculons ensemble la rentabilité nette et brute de votre biens. Analysons ensemble d'après vos taux et votre durée 
+        d'emprunt, le prix de vos mensualités de crédit. Ce bien est-il rentable ? Si oui, sur quelle période et à quel taux ? 
+        C&B IMMO est là pour vous aider à vous lancez dans l'Immobilier en prenant tous les paramètres en compte.</h3>-->
+    </div>
+    
+    <label>
+      <h4>Prix du Bien</h4>
+      <input id="prixachat" type="number" placeholder="Prix en Euros">
+    </label>
+    <label>
+      <h4>Nombre de m²</h4>
+      <input id="nbm2" type="number" placeholder="Surface en m²"/>
+    </label>
+    <label>
+      <h4>Prix du m² dans le Secteur</h4>
+      <input id="prixm2secteur" type="number" placeholder="Voir le site Meilleursagents.com"/>
+    </label>
+    <label>
+      <h4>Prix moyen louable dans le Secteur</h4>
+      <input id="prixlocation" type="number" placeholder="Voir le site Leboncoin, Se Loger"/>
+    </label>
+    <label>
+      <h4>Taxe Foncière Annuelle</h4>
+      <input id="TF" type="number" placeholder="Voir le site Meilleursagents.com"/>
+    </label>
+    <label>
+      <h4>Charges de Copropriété Annuelle</h4>
+      <input id="copro" type="number" placeholder="Voir l'annonce du bien"/>
+    </label>
+    <label>
+      <h4>Electricité Annuelle</h4>
+      <input id="elec" type="number" placeholder="Voir l'annonce du bien"/>
+    </label>
+    <label>
+      <h4>Prix Annuelle de l'assurance PNO <br>(voir LeLynx.fr ou LesFurets.com)</h4>
+      <input id="PNO" type="number" placeholder="0 si vous n'en avez pas"/>
+    </label>
+    <label>
+      <h4>Prix des Frais d'Agence</h4>
+      <input id="FA" type="number" placeholder="Voir le site Meilleursagents.com"/>
+    </label>
+    <label>
+      <h4>Prix des Frais de Notaire</h4>
+        <input id ="FN" type="number" placeholder="Voir le site LeNotaire.fr"/>
+      </label>
+      <label>
+        <h4>Prix des Frais Travaux</h4>
+        <input id="FT" type="number" placeholder="Estimation"/>
+      </label>
+      <label>
+        <h4>Prix d'ammeublement</h4>
+          <input id="amm" type="number" placeholder="Estimation"/>
+        </label>
+        <label>
+          <h4>Apport en Euros</h4>
+          <input id="apport" type="number" placeholder="en €"/>
+        </label>
+        <label>
+          <h4>Durée d'emprunt</h4>
+            <input id="DureeEmprunt" type="number" placeholder="En Année"/>
+          </label>
+          <label>
+            <h4>Taux d'emprunt</h4>
+            <input id ="TauxEmprunt" type="number" placeholder="En pourcentage" step="0.01"/>
+          </label>
+
+          <h4>Est-ce que la Population augmente dans ce secteur ? <br> Voir le site Villesavivre.com</h4>
+          <label class="switch">
+            
+            <input id="Mycheckbox" type="checkbox">
+            <span class="slider round"></span>
+          </label>
+    <button class="red" type="submit" value="send"><i class="icon ion-md-lock"></i>Calculons</button>
+    
+    <div class="segment-2">
+      <a href="https://www.linkedin.com/in/corentin-bocquet-5b1b38216"><button class="unit" type="button"><i class="fa-brands fa-linkedin-in"></i></button></a>
+      <a href="https://www.instagram.com/corentin_bocquet/?utm_source=ig_web_button_share_sheet"><button class="unit" type="button"><i class="fa-brands fa-twitter"></i></button></a>
+      <a href="https://www.instagram.com/corentin_bocquet/?utm_source=ig_web_button_share_sheet"><button class="unit" type="button"><i class="fa-brands fa-instagram"></i></button></a>
+    </div>
+    
+    
+    
+  </form>
+
+  <script>
+    document.getElementById('myForm').addEventListener('submit',function(event){
+
+      event.preventDefault();
+
+      var prixachat = document.getElementById('prixachat').value;
+      var nbm2 = document.getElementById('nbm2').value;
+      var prixm2secteur = document.getElementById('prixm2secteur').value;
+      var prixlocation = document.getElementById('prixlocation').value;
+      var TF = document.getElementById('TF').value;
+      var copro = document.getElementById('copro').value;
+      var elec = document.getElementById('elec').value;
+      var PNO = document.getElementById('PNO').value;
+      var FA = document.getElementById('FA').value;
+      var FN = document.getElementById('FN').value;
+      var FT = document.getElementById('FT').value;
+      var amm = document.getElementById('amm').value;
+      var apport = document.getElementById('apport').value;
+      var DureeEmprunt = document.getElementById('DureeEmprunt').value;
+      var TauxEmprunt = document.getElementById('TauxEmprunt').value;
+      var isChecked = document.getElementById('Mycheckbox').checked;
+    
+
+      sessionStorage.setItem('prixachat',prixachat);
+      sessionStorage.setItem('nbm2',nbm2);
+      sessionStorage.setItem('prixm2secteur',prixm2secteur);
+      sessionStorage.setItem('prixlocation',prixlocation);
+      sessionStorage.setItem('TF',TF);
+      sessionStorage.setItem('copro',copro);
+      sessionStorage.setItem('elec',elec);
+      sessionStorage.setItem('PNO',PNO);
+      sessionStorage.setItem('FA',FA);
+      sessionStorage.setItem('FN',FN);
+      sessionStorage.setItem('FT',FT);
+      sessionStorage.setItem('amm',amm);
+      sessionStorage.setItem('apport',apport);
+      sessionStorage.setItem('DureeEmprunt',DureeEmprunt);
+      sessionStorage.setItem('TauxEmprunt',TauxEmprunt);
+      sessionStorage.setItem('isChecked', isChecked); // Enregistrez l'état de la checkbox
+
+      window.location.href = 'Immo2Results.html';
+    });
+  </script>
+</body>
+</html>
