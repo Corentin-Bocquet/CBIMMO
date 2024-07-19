@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Immo2Results.css">
+    <title>C&B IMMO</title>
+</head>
+<body>
+
+    <div class="segment">
+    <img src="Building3.png" class="image2">
+    <div class="resultats">
+    </div>
+
+
+    <h1 class="merriweather-regular">C&B IMMO</h1><br>
+    <p class="merriweather-regular-2">Calculons ensemble la rentabilité de <br>votre bien</p>
+    <p class="merriweather-regular-3" id="NAN"></p>
+    
+    <!--<p class="merriweather-regular-3" id="resultprixachat"></p>-->
+    
+
+    <table class="container">
+        <thead>
+          <tr>
+            <th><h1>Catégories</h1></th>
+            <th><h1>Résultats</h1></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="varpop-row">Attractivité de la Ville</td>
+            <td id="varpop-row2"><p id="VarPop"></p></td>
+          </tr>
+          <tr>
+            <td id="mensu-row">Mensualiés de Crédits</td>
+            <td id="mensu-row2"><p id="Mensu"></p></td>
+          </tr>
+          <tr>
+            <td id="rentaA-row">Rentabilités Nette Annuelle</td>
+            <td id="rentaA-row2"><p id="RentaA"></p></td>
+          </tr>
+          <tr>
+            <td id="rentaM-row">Rentabilité Nette Mensuelle</td>
+            <td id="rentaM-row2"><p id="RentaM"></p></td>
+          </tr>
+        </tbody>
+      </table>
+
+    <div class="bord">
+        <p class="merriweather-regular-3" id="popaug"></p>
+        <p class="merriweather-regular-3" id="avisrentanette"></p>
+        <p class="merriweather-regular-3" id="avism2"></p>
+    </div>
+
+
+    <script>
+        // Récupérer les valeurs
+        var prixachat = sessionStorage.getItem('prixachat');
+        var nbm2 = sessionStorage.getItem('nbm2');
+        var prixm2secteur = sessionStorage.getItem('prixm2secteur');
+        var prixlocation = sessionStorage.getItem('prixlocation');
+        var TF = sessionStorage.getItem('TF');
+        var copro = sessionStorage.getItem('copro');
+        var elec = sessionStorage.getItem('elec');
+        var PNO = sessionStorage.getItem('PNO');
+        var FA = sessionStorage.getItem('FA');
+        var FN = sessionStorage.getItem('FN');
+        var FT = sessionStorage.getItem('FT');
+        var amm = sessionStorage.getItem('amm');
+        var apport = sessionStorage.getItem('apport');
+        var DureeEmprunt = sessionStorage.getItem('DureeEmprunt');
+        var TauxEmprunt = sessionStorage.getItem('TauxEmprunt');
+        var isChecked = sessionStorage.getItem('isChecked') === 'true';
+
+
+        // Calculs
+        var PrixAuM2 = prixachat/nbm2;
+        var TFA = TF/12;
+        var coproA = copro/12;
+        var PNOA = PNO/12;
+        var elecA = elec/12;
+        var CoutTotal = prixachat + FA + FN + FT + amm;
+        var LoyerEstime = prixlocation - TFA - coproA - PNOA - elecA;
+        var MontantEmprunte = prixachat - apport;
+        var TauxPeriodique = (Math.pow((1+TauxEmprunt),(1/12))-1)/100;
+        var Mensualites = (MontantEmprunte*TauxPeriodique*(Math.pow((1+TauxPeriodique),(DureeEmprunt*12))))/(Math.pow((1+TauxPeriodique),(DureeEmprunt*12))-1);
+        var RentaBrute = ((LoyerEstime*12)/prixachat)*100;
+        var RentaNette = LoyerEstime - Mensualites;
+        
+
+
+        // Afficher les résultats
+
+        if(isNaN(Mensualites) || isNaN(RentaBrute) || isNaN(RentaNette)){
+            document.getElementById('NAN').textContent = "Attention, toutes les valeurs n'ont pas été saisies, ce qui corrompt les résultats. Réésayez en remplissant tous les champs";
+        }else{
+
+        if(isChecked){
+            document.getElementById('VarPop').innerHTML = "Bonne";
+            document.getElementById('varpop-row').style.backgroundColor = '#7CF3A0';
+            document.getElementById('varpop-row2').style.backgroundColor = '#7CF3A0';
+            document.getElementById('VarPop').style.color = '#004d04';
+            document.getElementById('VarPop').style.fontWeight = 'bold';
+
+        }else{
+            document.getElementById('VarPop').innerHTML = "Mauvaise";
+            document.getElementById('varpop-row').style.backgroundColor = '#FF2C21';
+            document.getElementById('varpop-row2').style.backgroundColor = '#FF2C21';
+            document.getElementById('VarPop').style.color = '#670000';
+            document.getElementById('VarPop').style.fontWeight = 'bold';
+        }
+
+        if(Mensualites <= LoyerEstime){
+            document.getElementById('Mensu').innerHTML = Mensualites.toFixed(2) + "€"; 
+            document.getElementById('mensu-row').style.backgroundColor = '#7CF3A0';
+            document.getElementById('mensu-row2').style.backgroundColor = '#7CF3A0';
+            document.getElementById('Mensu').style.color = '#004d04';
+            document.getElementById('Mensu').style.fontWeight = 'bold';
+
+        }else{
+            document.getElementById('Mensu').innerHTML = Mensualites.toFixed(2) + "€";            
+            document.getElementById('mensu-row').style.backgroundColor = '#FF2C21';
+            document.getElementById('mensu-row2').style.backgroundColor = '#FF2C21';
+            document.getElementById('Mensu').style.color = '#670000';
+            document.getElementById('Mensu').style.fontWeight = 'bold';
+        }
+
+        if(RentaBrute.toFixed(2) > 7){
+            document.getElementById('RentaA').innerHTML = RentaBrute.toFixed(2) + "%";            
+            document.getElementById('rentaA-row').style.backgroundColor = '#7CF3A0';
+            document.getElementById('rentaA-row2').style.backgroundColor = '#7CF3A0';
+            document.getElementById('RentaA').style.color = '#004d04';
+            document.getElementById('RentaA').style.fontWeight = 'bold';
+
+        }else{
+            document.getElementById('RentaA').innerHTML = RentaBrute.toFixed(2) + "%";            
+            document.getElementById('rentaA-row').style.backgroundColor = '#FF2C21';
+            document.getElementById('rentaA-row2').style.backgroundColor = '#FF2C21';
+            document.getElementById('RentaA').style.color = '#670000';
+            document.getElementById('RentaA').style.fontWeight = 'bold';
+        }
+
+        if(RentaNette.toFixed(2) >= 0){
+            document.getElementById('RentaM').innerHTML = RentaNette.toFixed(2) + "€";            
+            document.getElementById('rentaM-row').style.backgroundColor = '#7CF3A0';
+            document.getElementById('rentaM-row2').style.backgroundColor = '#7CF3A0';
+            document.getElementById('RentaM').style.color = '#004d04';
+            document.getElementById('RentaM').style.fontWeight = 'bold';
+
+        }else{
+            document.getElementById('RentaM').innerHTML = RentaNette.toFixed(2) + "€";            
+            document.getElementById('rentaM-row').style.backgroundColor = '#FF2C21';
+            document.getElementById('rentaM-row2').style.backgroundColor = '#FF2C21';
+            document.getElementById('RentaM').style.color = '#670000';
+            document.getElementById('RentaM').style.fontWeight = 'bold';
+        }
+
+        
+        
+        
+
+        /*document.getElementById('resultprixachat').innerHTML = "Le prix d'achat est de : " + prixachat +
+         ", le nombre de m2 est : " + nbm2 + ", le prix au m2 du secteur est de : " + prixm2secteur + 
+         "€, le prix moyen de location est de : " + prixlocation + "€, la Taxe Foncière Annuelle est de : " + TF + 
+         "€, les charges coproo sont de : " + copro + "€, les factures d'électricité annuelle sont de : " + elec +
+         "€, l'assurance PNO est de : " + PNO + "€, les frais d'agence sont de : " + FA + "€, les frais de Notaire sont de :"
+         + FN + "€, les Frais de Travaux sont de : " + FT + "€, l'ammeublement est de : " + amm + "€, l'apport est de : " 
+         + apport + "€, la Durée de l'emprunt est de : " + DureeEmprunt + "ans, le taux d'emprunt est de : " + TauxEmprunt + "%." + "Vos mensualités de Crédit que vous devez verser à votre banque chaque mois sont de " +
+         Mensualites.toFixed(2) + " Votre Rentabilité Nette Annuelle en pourcentage est de " + RentaBrute.toFixed(2) + "%. Cela signifie que votre bien finance "+ RentaBrute.toFixed(2) + "% de votre emprunt chaque année." + " Et votre Rentabilité Nette Mensuelle en euros est de " + RentaNette.toFixed(2) + "€.";*/
+
+         if(RentaNette>=0){
+            document.getElementById('avisrentanette').innerHTML = "Bravo, vous avez une rentabilité Nette supérieur à 0, cela signifie que votre bien s'autofinancera tout seul. Vous n'aurez donc pas d'argent à sortir de votre poche chaque mois. Il se peut même que vous génériez du cashflow, qui ne l'oublions pas sera imposable quant à lui";
+
+         }else{
+            document.getElementById('avisrentanette').innerHTML = "Malheuresement, votre bien ne s'autofinance pas. Il vous faudra donc chaque mois sortir " + RentaNette.toFixed(2) + " de votre poche pour que le bien soit financé" +
+            " Il vous reste cependant plusieurs solutions, ce bien ne sera pas rentable pour faire de la location longue durée, car tu as un taux d'emprunt trop élevé ou un apport trop faible par rapport au loyer que tu génères. " +
+            "Tu peux donc essayer de voir les loyers qu'il te serait possible de générer avec de la location courte durée en prenant en compte les potentiels frais de conciergerie, blanchisserie, maintenance, fournitures, gestion des réservations, frais de service AirBNB ... Tu peux aussi partir sur de l'achat revente si ton bien a un prix/m2 inférieur à celui du secteur et qu'il est en bon état" +
+            "Et si jamais tu ne trouves pas chaussures à ton pied, parmis ces solutions, essaye de négocier un Taux d'emprunt bien inférieur ou attend une année plus propice à l'emprunt et essaye d'avoir un apport plus conséquent, ce qui augmentera fortement les chances que ton bien s'autofinance.";
+         }
+    
+        if(PrixAuM2>=prixm2secteur){
+            document.getElementById('avism2').innerHTML = "Votre bien se situe au dessus des prix du marché dans ce secteur."
+        }else{
+            document.getElementById('avism2').innerHTML = "Votre bien se situe en dessous des prix du marché dans ce secteur."
+        }
+
+        if(isChecked){
+            document.getElementById('popaug').innerHTML = "Tout d'abord bravo, car vous avez choisi une ville qui attire, c'est déja un très bon premier pas et il est essentiel de choisir une bonne Ville avant de choisir un bien."
+        }else{
+            document.getElementById('popaug').innerHTML = "Pour commencer, la ville que vous avez choisi n'est pas très attractive, n'hésitez pas à aller voir d'autres villes aux alentours qui pourraient être plus attractive, il est essentiel de choisir une bonne Ville avant de choisir un bien."
+        }
+
+    }
+    </script>
+
+</div>
+    
+</body>
+</html>
